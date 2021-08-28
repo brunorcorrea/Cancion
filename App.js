@@ -1,12 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, StatusBar } from 'react-native';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import { Bungee_400Regular } from '@expo-google-fonts/bungee';
+import { Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
+
+import LandingPage from './src/screens/LandingPage';
+
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
+    const { Navigator, Screen } = createStackNavigator();
+
+    const [isFontsLoaded] = useFonts({
+        Bungee_400Regular,
+        Quicksand_400Regular,
+        Quicksand_700Bold
+    });
+
+    if(!isFontsLoaded){
+        return <AppLoading/>
+    }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+        <StatusBar
+            barStyle="light-content"
+            backgroundColor="transparent"
+            translucent
+        />
+        <NavigationContainer>
+            <Navigator
+                headerMode="none"
+                initialRouteName="LandingPage"
+                screenOptions={{
+                    cardStyle:{
+                        backgroundColor: "#222"
+                    }
+                }}
+            >
+                <Screen
+                    name="LandingPage"
+                    component={LandingPage}
+                />
+            </Navigator>
+        </NavigationContainer>
     </View>
   );
 }
@@ -14,8 +53,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  }
 });
