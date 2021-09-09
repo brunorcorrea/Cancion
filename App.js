@@ -9,6 +9,9 @@ import LandingPage from './src/screens/LandingPage';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import Home from './src/screens/Home';
+import Artist from './src/screens/Artist';
+import Music from './src/screens/Music';
 
 export default function App() {
     const { Navigator, Screen } = createStackNavigator();
@@ -43,6 +46,24 @@ export default function App() {
                 <Screen
                     name="LandingPage"
                     component={LandingPage}
+                />
+
+                <Screen
+                    name="Home"
+                    component={Home}
+                />
+
+                <Screen
+                    name="Artist"
+                    component={Artist}
+                />
+
+                <Screen
+                    name="Music"
+                    component={Music}
+                    options={{
+                        animationEnabled: false
+                    }}
                 />
             </Navigator>
         </NavigationContainer>

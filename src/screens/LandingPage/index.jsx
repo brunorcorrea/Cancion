@@ -6,7 +6,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 import CancionText from '../../components/CancionText';
 import LPImage from '../../assets/lp-image.png';
 
+import { useNavigation } from '@react-navigation/core';
+
 export default function LandingPage(){
+    const navigation = useNavigation();
+
+    function handleGoToHome(){
+        navigation.navigate("Home");
+    }
+
     return(
         <View style={styles.container}>
             <View style={styles.cancion}>
@@ -27,6 +35,7 @@ export default function LandingPage(){
                 <TouchableOpacity
                     style={styles.btn}
                     activeOpacity={0.8}
+                    onPress={handleGoToHome}
                 >
                     <MaterialIcons
                         name="music-note"
