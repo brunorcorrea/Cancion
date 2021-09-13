@@ -1,27 +1,31 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-    },
-    cancion: {
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+      },
+      
+      cancion: {
         height: "20%",
         width: "100%",
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    btnView: {
+      },
+      
+      btnView: {
         height: "20%",
         width: "100%",
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    image: {
+      },
+      
+      image: { 
         width: "100%",
-        height: "60%"
-    },
-    btn: {
+        height: "60%",
+      },
+      
+      btn: {
         width: "80%",
         height: 64,
         backgroundColor: "#FDDC5C",
@@ -29,12 +33,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row'
-    },
-    btnText: {
+      },
+      
+      btnText: {
         marginLeft: 24,
-        fontSize: 20,
+        fontSize: 18,
         fontFamily: 'Quicksand_400Regular'
-    }
-  });
-  
+      }
+});
+
 export default styles;

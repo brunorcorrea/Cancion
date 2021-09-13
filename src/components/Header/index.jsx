@@ -1,35 +1,38 @@
-import React from "react";
-import styles from "./styles";
-
-import { TouchableOpacity, View } from 'react-native';
-
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import CancionText from '../CancionText';
 import { useNavigation } from "@react-navigation/core";
 
-export default function Header(){
-    const navigation = useNavigation();
+import CancionText from '../CancionText';
 
-    function handleGoBack(){
-        navigation.goBack();
-    }
+import styles from './styles';
 
-    return(
-        <View style={styles.container}>
-            <TouchableOpacity
-                onPress={handleGoBack}
-            >
-                <MaterialIcons
-                    name="arrow-back"
-                    size={24}
-                />
-            </TouchableOpacity>
+function Header() {
+  const navigation = useNavigation();
 
-            <CancionText
-                primary="black"
-                secondary="white"
-                size={24}
-            />
-        </View>
-    );
+  function handleGoBack(){
+    navigation.goBack();
+  }
+
+  return (
+    <View style={styles.container}>
+
+      <TouchableOpacity
+        onPress={handleGoBack}
+      >
+        <MaterialIcons 
+          name="arrow-back"
+          size={24}
+        />
+      </TouchableOpacity>
+
+      <CancionText 
+        primary="black"
+        secondary="white"
+        size={24}
+      />  
+    </View>
+  );
 }
+
+export default Header;

@@ -1,43 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, Image } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
-import styles from "./styles";
+import api from '../../services/api';
 
-import { Text, ScrollView, View, Image } from "react-native";
-import Header from "../../components/Header";
-import Wrapper from "../../components/Wrapper";
+import Wrapper from '../../components/Wrapper';
+import Header from '../../components/Header';
+
+import styles from './styles';
 
 export default function Artist(){
-    return (
-        <ScrollView style={styles.container}>
-            <Header/>
-            <View style={styles.content}>
-                <Image
-                    source={{uri: "https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2021/07/coldplay-music-of-the-spheres.png"}}
-                    style={styles.image}
-                />
+  const [musics, setMusics] = useState([]);
+  const [artistData, setArtistData] = useState({
+    strArtist: "Nome do artista",
+    strGenre: "Estilo do artista",
+    intFormedYear: "1900",
+    strCountry: "Brasil",
+    intMembers: "0",
+    strArtistThumb: "https://i.imgur.com/7qiBcdQ.png",
+    strBiographyEN: "Descrição do artista."
+  });
 
-                <Text style={styles.artist}>ColdPlay</Text>
-                <Text style={styles.info}>
-                    Estilo: Alternative Rock {'\n'}
-                    Integrantes: 4 {'\n'}
-                    País: Inglaterra {'\n'}
-                    Ano de formação: 1996 {'\n'}
-                    Descrição: Coldplay é uma banda de rock alternativo britânica formada em 1996 pelo vocalista Chris Martin eo guitarrista Jonny Buckland no University Colle ... Mostrar mais
-                </Text>
+  const { params: { id } } = useRoute();
 
-                <View style={styles.titleView}>
-                    <Text style={styles.title}>Músicas</Text>
-                </View>
+  async function fetchArtistDataAndMusics(){
+    const {data: { artists }} = await api.get(`artist.php?i=${id}`);
+    setArtistData(artists[0]);
+    
+    const {data: {mvids: artistMusics}} = await api.get(`mvid.php?i=${id}`);
+    if(artistMusics !== null) setMusics(artistMusics);
+  }
 
-                <Wrapper
-                    title="In my place"
-                    subtitle="ColdPlay"
-                    img="https://lastfm.freetls.fastly.net/i/u/ar0/91839d35e0804e68bccaceb26aa2c115.jpg"
+  useEffect(() => {
+    fetchArtistDataAndMusics();
+  }, [])
+
+  return (
+    <ScrollView style={styles.container}>
+      <Header />
+      <View style={styles.content}>
+            <Image 
+            style={styles.image}
+            source={{uri: artistData.strArtistThumb}}
+            />
+            
+        <Text style={styles.artist}>{artistData.strArtist}</Text>
+            <Text style={styles.info}>
+            Estilo: {artistData.strGenre} {'\n'}
+            Integrantes: {artistData.intMembers} {'\n'}
+            País: {artistData.strCountry} {'\n'}
+            Ano de formação: {artistData.intFormedYear} {'\n'}
+            Descrição: {artistData.strBiographyEN}
+        </Text>        
+        
+        {
+          musics.length !== 0 && (
+            <>
+              <View style={styles.titleView}>
+                <Text style={styles.title}>Músicas</Text>
+              </View>
+              
+              {
+                musics.map((music, index) => (
+                  <Wrapper 
+                    key={index}
+                    title={music.strTrack}
+                    subtitle={artistData.strArtist}
+                    img={music.strTrackThumb || "https://www.recorteadesivo.com.br/site/fotoTexturaMaterial?id_recorte_personalizado=43&id_materia_prima=406&tamanho=290x290"}
                     type="MUSIC"
-                    id={1}
-                />
-                
-            </View>
-        </ScrollView>
-    );
+                    id={music.idTrack}
+                  />
+                ))
+              }
+            </>
+          )
+        }
+
+      </View>
+    </ScrollView>
+  );
 }
