@@ -1,6 +1,5 @@
 import React from 'react';
 import { useFonts } from 'expo-font';
-import AppLoading from 'expo-app-loading';
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar, StyleSheet, View } from 'react-native';
@@ -22,8 +21,8 @@ export default function App() {
     Quicksand_700Bold
   });
 
-  if(!isFontsLoaded){
-    return <AppLoading />
+  if (!isFontsLoaded) {
+    return null;
   }
 
   return (
@@ -36,9 +35,9 @@ export default function App() {
 
       <NavigationContainer>
         <Navigator
-          headerMode="none"
           initialRouteName="LandingPage"
           screenOptions={{
+              headerShown: false,
               cardStyle: {
                   backgroundColor: "#222"
               }
